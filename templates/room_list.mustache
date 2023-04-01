@@ -1,0 +1,46 @@
+<div>
+    <a class="btn btn-primary" href="insert.php">Založit novou místnost</a>
+</div>
+<table class="table table-striped mt-3">
+    <tr>
+        <th>Název</th>
+        <th>Číslo</th>
+        <th>Telefon</th>
+        <th colspan="2">Akce</th>
+    </tr>
+    {{#rooms}}
+        <tr>
+            <td><a href="detail.php?room_id={{room_id}}">{{name}}</a></td>
+            <td>{{no}}</td>
+            <td>{{phone}}</td>
+            <td>
+                {{#adminState }}
+                    <form method="get" action="update.php?room_id={{room_id}}">
+                    <input type="submit" value="Upravit" class="btn btn-info">
+                    <input type="hidden" name="room_id" value="{{room_id}}">
+                    </form>
+                {{/adminState}}
+                {{^adminState}}
+                    <form method="get" action="update.php">
+                        <input type="submit" disabled value="Upravit" class="btn btn-info">
+                        <input type="hidden" disabled name="room_id" value="{{room_id}}">
+                    </form>
+                {{/adminState}}
+            </td>
+            <td>
+                {{#adminState }}
+                    <form method="post" action="delete.php">
+                        <input type="submit" value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat místnost?')">
+                        <input type="hidden" name="room_id" value="{{room_id}}">
+                    </form>
+                {{/adminState}}
+                {{^adminState}}
+                    <form method="post" action="delete.php">
+                        <input type="submit" disabled value="Smazat" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat místnost?')">
+                        <input type="hidden" disabled name="room_id" value="{{room_id}}">
+                    </form>
+                {{/adminState}}
+            </td>
+        </tr>
+    {{/rooms}}
+</table>

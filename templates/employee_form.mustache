@@ -1,0 +1,66 @@
+<h2>
+    {{#employee.employee_id}}Upravit zaměstnance{{/employee.employee_id}}
+    {{^employee.employee_id}}Přidat zaměstnance{{/employee.employee_id}}
+</h2>
+<form method="post">
+    <!--    id-->
+    <input type="hidden" name="employee_id" value="{{employee.employee_id}}">
+
+    <!--    name-->
+    <div class="form-group">
+        <label for="name" style="font-weight: bold">Jméno</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{employee.name}}" required>
+        {{#errors.name}}<div class="d-block invalid-feedback">{{errors.name}}</div>{{/errors.name}}
+    </div>
+    <!--    surname-->
+    <div class="form-group">
+        <label for="surname" style="font-weight: bold">Příjmení</label>
+        <input type="text" class="form-control" id="surname" name="surname" value="{{employee.surname}}" required>
+        {{#errors.surname}}<div class="d-block invalid-feedback">{{errors.surname}}</div>{{/errors.surname}}
+    </div>
+    <!--    job-->
+    <div class="form-group">
+        <label for="job" style="font-weight: bold">Práce</label>
+        <input type="text" class="form-control" id="job" name="job" value="{{employee.job}}" required>
+        {{#errors.job}}<div class="d-block invalid-feedback">{{errors.job}}</div>{{/errors.job}}
+    </div>
+    <!--    wage-->
+    <div class="form-group">
+        <label for="wage" style="font-weight: bold">Plat</label>
+        <input type="text" class="form-control" id="wage" name="wage" value="{{employee.wage}}" required>
+        {{#errors.wage}}<div class="d-block invalid-feedback">{{errors.wage}}</div>{{/errors.wage}}
+    </div>
+    <!--    workplace-->
+    <div class="form-group">
+        <label for="workplace" style="font-weight: bold">Pracovní místo</label>
+    </div>
+    <div>
+        {{#workplaceInfo}}
+            <label style="display: flex">
+                {{name}}
+                <input type="checkbox" class="" id="room" name="room" style="display: flex; margin-left: 5px" value="{{employee.room}}">
+            </label>
+            {{#errors.room}}<div class="d-block invalid-feedback">{{errors.room}}</div>{{/errors.room}}
+        {{/workplaceInfo}}
+    </div>
+    <!--    login-->
+    <div class="form-group">
+        <label for="login" style="font-weight: bold">Uživatelské jméno</label>
+        <input type="text" class="form-control" id="login" name="login" value="{{employee.login}}" required>
+        {{#errors.login}}<div class="d-block invalid-feedback">{{errors.login}}</div>{{/errors.login}}
+    </div>
+    <!--    password-->
+    <div class="form-group">
+        <label for="password" style="font-weight: bold">Heslo</label>
+        <input type="password" class="form-control" id="password" name="password" value="{{employee.password}}" required>
+        {{#errors.password}}<div class="d-block invalid-feedback">{{errors.password}}</div>{{/errors.password}}
+    </div>
+    <!--    admin-->
+    <div class="form-group">
+        <label for="admin" style="font-weight: bold">Admin</label>
+        <input type="checkbox" class="" id="admin" name="admin" value="{{employee.admin}}" {{#employee.admin}}checked{{/employee.admin}}{{^employee.admin}}unchecked{{/employee.admin}}>
+        {{#errors.admin}}<div class="d-block invalid-feedback">{{errors.admin}}</div>{{/errors.admin}}
+    </div>
+    <!--tlacitko-->
+    <button type="submit" class="btn btn-info mt-3">Odeslat</button>
+</form>

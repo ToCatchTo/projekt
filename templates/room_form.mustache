@@ -1,0 +1,29 @@
+<h2>
+    {{#room.room_id}}Upravit místnost{{/room.room_id}}
+    {{^room.room_id}}Založit místnost{{/room.room_id}}
+</h2>
+<form method="post">
+<!--    id-->
+    <input type="hidden" name="room_id" value="{{room.room_id}}">
+
+    <!--    name-->
+    <div class="form-group">
+        <label for="name">Název</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{room.name}}" required>
+        {{#errors.name}}<div class="d-block invalid-feedback">{{errors.name}}</div>{{/errors.name}}
+    </div>
+<!--    phone-->
+    <div class="form-group">
+        <label for="phone">Telefon</label>
+        <input type="text" class="form-control" id="phone" name="phone" value="{{room.phone}}">
+        {{#errors.phone}}<div class="d-block invalid-feedback">{{errors.phone}}</div>{{/errors.phone}}
+    </div>
+<!--    no-->
+    <div class="form-group">
+        <label for="no">Číslo</label>
+        <input type="text" class="form-control" id="no" name="no"  value="{{room.no}}"required>
+        {{#errors.no}}<div class="d-block invalid-feedback">{{errors.no}}</div>{{/errors.no}}
+    </div>
+<!--tlacitko-->
+    <button type="submit" class="btn btn-info mt-3">Odeslat</button>
+</form>
