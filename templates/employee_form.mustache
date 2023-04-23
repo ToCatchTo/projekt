@@ -9,36 +9,36 @@
     <!--    name-->
     <div class="form-group">
         <label for="name" style="font-weight: bold">Jméno</label>
-        <input type="text" class="form-control" id="name" name="name" value="{{employee.name}}" required>
+        <input type="text" class="form-control" id="name" name="name" value="{{employee.name}}">
         {{#errors.name}}<div class="d-block invalid-feedback">{{errors.name}}</div>{{/errors.name}}
     </div>
     <!--    surname-->
     <div class="form-group">
         <label for="surname" style="font-weight: bold">Příjmení</label>
-        <input type="text" class="form-control" id="surname" name="surname" value="{{employee.surname}}" required>
+        <input type="text" class="form-control" id="surname" name="surname" value="{{employee.surname}}">
         {{#errors.surname}}<div class="d-block invalid-feedback">{{errors.surname}}</div>{{/errors.surname}}
     </div>
     <!--    job-->
     <div class="form-group">
         <label for="job" style="font-weight: bold">Práce</label>
-        <input type="text" class="form-control" id="job" name="job" value="{{employee.job}}" required>
+        <input type="text" class="form-control" id="job" name="job" value="{{employee.job}}">
         {{#errors.job}}<div class="d-block invalid-feedback">{{errors.job}}</div>{{/errors.job}}
     </div>
     <!--    wage-->
     <div class="form-group">
         <label for="wage" style="font-weight: bold">Plat</label>
-        <input type="text" class="form-control" id="wage" name="wage" value="{{employee.wage}}" required>
+        <input type="text" class="form-control" id="wage" name="wage" value="{{employee.wage}}">
         {{#errors.wage}}<div class="d-block invalid-feedback">{{errors.wage}}</div>{{/errors.wage}}
     </div>
     <!--    workplace-->
     <div class="form-group">
-        <label for="workplace" style="font-weight: bold">Pracovní místo</label>
+        <label for="workplace" style="font-weight: bold">Klíče</label>
     </div>
     <div>
         {{#workplaceInfo}}
             <label style="display: flex">
                 {{name}}
-                <input type="checkbox" class="" id="room" name="room" style="display: flex; margin-left: 5px" value="{{employee.room}}">
+                <input type="checkbox" class="" id="room_key_{{room_id}}" name="room_keys[]" style="display: flex; margin-left: 5px" value="{{room_id}}" {{#checked}}checked{{/checked}}>
             </label>
             {{#errors.room}}<div class="d-block invalid-feedback">{{errors.room}}</div>{{/errors.room}}
         {{/workplaceInfo}}
@@ -46,21 +46,36 @@
     <!--    login-->
     <div class="form-group">
         <label for="login" style="font-weight: bold">Uživatelské jméno</label>
-        <input type="text" class="form-control" id="login" name="login" value="{{employee.login}}" required>
+        <input type="text" class="form-control" id="login" name="login" value="{{employee.login}}">
         {{#errors.login}}<div class="d-block invalid-feedback">{{errors.login}}</div>{{/errors.login}}
     </div>
     <!--    password-->
     <div class="form-group">
-        <label for="password" style="font-weight: bold">Heslo</label>
-        <input type="password" class="form-control" id="password" name="password" value="{{employee.password}}" required>
+        <label for="password" style="font-weight: bold">Nové heslo</label>
+        <input type="password" class="form-control" id="password" name="password" value="{{employee.password}}">
         {{#errors.password}}<div class="d-block invalid-feedback">{{errors.password}}</div>{{/errors.password}}
     </div>
-    <!--    admin-->
     <div class="form-group">
-        <label for="admin" style="font-weight: bold">Admin</label>
-        <input type="checkbox" class="" id="admin" name="admin" value="{{employee.admin}}" {{#employee.admin}}checked{{/employee.admin}}{{^employee.admin}}unchecked{{/employee.admin}}>
-        {{#errors.admin}}<div class="d-block invalid-feedback">{{errors.admin}}</div>{{/errors.admin}}
+        <label for="passwordAgain" style="font-weight: bold">Nové heslo znovu</label>
+        <input type="password" class="form-control" id="passwordAgain" name="passwordAgain" value="{{employee.passwordAgain}}">
+        {{#errors.passwordAgain}}<div class="d-block invalid-feedback">{{errors.passwordAgain}}</div>{{/errors.passwordAgain}}
     </div>
+    <div class="form-group" style="display: flex; flex-direction: column">
+        <label for="room" style="font-weight: bold">Vyberte pracoviště:</label>
+        <select name="room" id="room">
+            {{#workplaceInfo}}
+                <option {{#selected}}selected{{/selected}} value="{{room_id}}">{{name}}</option>
+            {{/workplaceInfo}}
+        </select>
+    </div>
+    <!--    admin-->
+    {{#isAdmin}}
+        <div class="form-group">
+            <label for="admin" style="font-weight: bold">Admin</label>
+            <input type="checkbox" class="" id="admin" name="admin" value="{{employee.admin}}" {{#employee.admin}}checked{{/employee.admin}}>
+            {{#errors.admin}}<div class="d-block invalid-feedback">{{errors.admin}}</div>{{/errors.admin}}
+        </div>
+    {{/isAdmin}}
     <!--tlacitko-->
     <button type="submit" class="btn btn-info mt-3">Odeslat</button>
 </form>
