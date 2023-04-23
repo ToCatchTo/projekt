@@ -8,11 +8,22 @@ class RoomInsertPage extends CRUDPage
     protected int $state;
     private Room $room;
     private array $errors;
+    public bool $duplicityPhoneCheck;
+    public bool $duplicityNumberCheck;
 
     protected function prepareData(): void
     {
         parent::prepareData();
         $this->state = $this->getState();
+        $this->duplicityPhoneCheck = true;
+        $this->duplicityNumberCheck = true;
+
+        if($_SESSION['adminStatus'] == false)
+        {
+            //header('Location: ../logoff.php');
+            header('HTTP/1.0 403 Forbidden');
+            die;
+        }
 
         switch ($this->state) {
             case self::STATE_FORM_REQUEST:
@@ -23,14 +34,40 @@ class RoomInsertPage extends CRUDPage
             case self::STATE_DATA_SENT:
                 //načíst data
                 $this->room = Room::readPost();
-                //zkontrolovat data
+                $allRooms = Room::all();
                 $this->errors = [];
-                if ($this->room->validate($this->errors))
+
+                foreach($allRooms as $item){
+                    $counter = 0;
+                    if($item->phone == $this->room->phone && $item->phone != "")
+                    {
+                        $this->duplicityPhoneCheck = false;
+                        $this->errors['phone'] = "Tento telefon už existuje";
+                        break;
+                    }
+                    $counter++;
+               }
+
+                foreach($allRooms as $item){
+                    if($item->no == $this->room->no)
+                    {
+                        $this->duplicityNumberCheck = false;
+                        $this->errors['no'] = "Číslo už existuje";
+                        break;
+                    }
+                }
+
+                //zkontrolovat data
+                if ($this->room->validate($this->errors) && $this->duplicityPhoneCheck && $this->duplicityNumberCheck && $_SESSION['adminStatus'])
                 {
                     //zpracovat
                     $result = $this->room->insert();
                     //přesměrovat
                     $this->redirect(self::ACTION_INSERT, $result);
+                }
+                else if(!$_SESSION['adminStatus'])
+                {
+                    header("Location: ../logoff.php");
                 }
                 else
                 {

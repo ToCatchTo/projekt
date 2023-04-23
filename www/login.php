@@ -16,7 +16,6 @@ class LoginForm extends Page
 
             // Get the PDO instance from PDOProvider
             $pdo = PDOProvider::get();
-            var_dump($pdo);
 
             // Validate the user's credentials
             $stmt = $pdo->prepare('SELECT * FROM `employee` WHERE login = ?');
@@ -27,6 +26,18 @@ class LoginForm extends Page
                 // Store the user's username in a session variable
                 $_SESSION['username'] = $username;
                 $_SESSION['loggedIn'] = true;
+                $_SESSION['adminStatus'] = false;
+                $_SESSION['currentId'] = false;
+                $employees = Staff::all();
+
+                foreach($employees[0] as $item) {
+                    if ($item->login == $_SESSION['username']) {
+                        if($item->admin)
+                            $_SESSION['adminStatus'] = true;
+                        $_SESSION['currentId'] = $item->employee_id;
+                    }
+                }
+
                 // Redirect to the home page
                 header('Location: index.php');
                 exit();

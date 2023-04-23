@@ -18,6 +18,11 @@ class RoomListPage extends CRUDPage
         } else {
             $resultAdminCheck = false;
         }
+        if($_SESSION['roomOccupied'])
+        {
+            echo '<script>alert("Místnost je pro někoho domovská, takže nemůže být smazána")</script>';
+            $_SESSION['roomOccupied'] = false;
+        }
 
         $html = $this->alert();
 
@@ -38,7 +43,6 @@ class RoomListPage extends CRUDPage
 
         $success = filter_input(INPUT_GET, 'success', FILTER_VALIDATE_INT);
         $data = [];
-        //$data['adminState'] = $this->employees;
 
         switch ($action)
         {

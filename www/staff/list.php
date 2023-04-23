@@ -8,7 +8,6 @@ class StaffListPage extends CRUDPage
 
     protected function pageBody(): string
     {
-
         $query = "SELECT admin FROM `employee` WHERE `login` = :username";
         $stmt = PDOProvider::get()->prepare($query);
         $stmt->execute(['username' => $_SESSION['username']]);
@@ -22,8 +21,16 @@ class StaffListPage extends CRUDPage
 
         $html = $this->alert();
 
-        //získám data o místnostech
         $employees = Staff::all();
+        $currentId = 0;
+
+        foreach($employees[0] as $item){
+            if($item->login == $_SESSION['username'])
+            {
+                $currentId = $item->employee_id;
+                $item->loggedInEmployee = true;
+            }
+        }
 
         $html .= MustacheProvider::get()->render("employee_list", ["employees" => $employees[0], "adminState" => $resultAdminCheck]);
         //vyrenderuju

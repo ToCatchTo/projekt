@@ -2,17 +2,17 @@
 require_once "../../bootstrap/bootstrap.php";
 session_start();
 
-class RoomDeletePage extends CRUDPage
+class StaffDeletePage extends CRUDPage
 {
 
     protected function prepareData(): void
     {
         parent::prepareData();
-        $roomId = filter_input(INPUT_POST, 'room_id', FILTER_VALIDATE_INT);
-        if (!$roomId)
+        $employeeId = filter_input(INPUT_POST, 'employee_id', FILTER_VALIDATE_INT);
+        if (!$employeeId)
             throw new BadRequestException();
 
-        $result = Room::deleteById($roomId);
+        $result = Staff::deleteById($employeeId);
         $this->redirect(self::ACTION_DELETE, $result);
     }
 
@@ -23,5 +23,5 @@ class RoomDeletePage extends CRUDPage
     }
 }
 
-$page = new RoomDeletePage();
+$page = new StaffDeletePage();
 $page->checkLogin($_SESSION['loggedIn']);
