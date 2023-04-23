@@ -117,12 +117,12 @@ class Room
         $pdo = PDOProvider::get();
 
         $stmt = $pdo->prepare($query);
+
         return $stmt->execute([
             'name' => $this->name,
             'no' => $this->no,
             'phone' => $this->phone
         ]);
-
     }
 
     public function update() : bool
