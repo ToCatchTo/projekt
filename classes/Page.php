@@ -19,11 +19,11 @@ abstract class Page
     protected function pageHeader() : string {
         if($this->title == "Registrace")
         {
-            return "";
+            return MustacheProvider::get()->render("page_registrationHeader", ["title" => "Registrace"]);
         }
         else if($this->title == "Přihlášení")
         {
-            return "";
+            return MustacheProvider::get()->render("page_loginHeader", ["title" => "Přihlášení"]);
         }
         return MustacheProvider::get()->render("page_header", []);
     }
